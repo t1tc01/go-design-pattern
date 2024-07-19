@@ -1,6 +1,7 @@
 package main
 
 import (
+	factorymethod "example/go-design-pattern/factory_method"
 	"example/go-design-pattern/prototype"
 	"example/go-design-pattern/singleton"
 	"fmt"
@@ -38,6 +39,31 @@ func PrototypeExample() {
 	cloneFolder := folder2.Clone()
 	fmt.Println("\nPrinting hierarchy for clone Folder")
 	cloneFolder.Print("  ")
+}
+
+func FactoryMethodExample() {
+	ak47, _ := getGun("ak47")
+	musket, _ := getGun("musket")
+
+	printDetails(ak47)
+	printDetails(musket)
+}
+
+func printDetails(g factorymethod.IGun) {
+	fmt.Printf("Gun: %s", g.GetName())
+	fmt.Println()
+	fmt.Printf("Power: %d", g.GetPower())
+	fmt.Println()
+}
+
+func getGun(gunType string) (factorymethod.IGun, error) {
+	if gunType == "ak47" {
+		return factorymethod.NewAk47(), nil
+	}
+	if gunType == "musket" {
+		return factorymethod.NewMusket(), nil
+	}
+	return nil, fmt.Errorf("wrong gun type passed")
 }
 
 // main
