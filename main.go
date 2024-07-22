@@ -1,6 +1,7 @@
 package main
 
 import (
+	abstractfactory "example/go-design-pattern/abstract_factory"
 	factorymethod "example/go-design-pattern/factory_method"
 	"example/go-design-pattern/prototype"
 	"example/go-design-pattern/singleton"
@@ -41,6 +42,7 @@ func PrototypeExample() {
 	cloneFolder.Print("  ")
 }
 
+// factory method
 func FactoryMethodExample() {
 	ak47, _ := getGun("ak47")
 	musket, _ := getGun("musket")
@@ -64,6 +66,38 @@ func getGun(gunType string) (factorymethod.IGun, error) {
 		return factorymethod.NewMusket(), nil
 	}
 	return nil, fmt.Errorf("wrong gun type passed")
+}
+
+func printShoeDetails(s abstractfactory.IShoe) {
+	fmt.Printf("Logo: %s", s.GetLogo())
+	fmt.Println()
+	fmt.Printf("Size: %d", s.GetSize())
+	fmt.Println()
+}
+
+func printShirtDetails(s abstractfactory.IShirt) {
+	fmt.Printf("Logo: %s", s.GetLogo())
+	fmt.Println()
+	fmt.Printf("Size: %d", s.GetSize())
+	fmt.Println()
+}
+
+// Abstract Factory Method
+func AbstractFactoryExample() {
+	adidasFactory, _ := abstractfactory.GetSportsFactory("adidas")
+	nikeFactory, _ := abstractfactory.GetSportsFactory("nike")
+
+	nikeShoe := nikeFactory.MakeShoe()
+	nikeShirt := nikeFactory.MakeShirt()
+
+	adidasShoe := adidasFactory.MakeShoe()
+	adidasShirt := adidasFactory.MakeShirt()
+
+	printShoeDetails(nikeShoe)
+	printShirtDetails(nikeShirt)
+
+	printShoeDetails(adidasShoe)
+	printShirtDetails(adidasShirt)
 }
 
 // main
